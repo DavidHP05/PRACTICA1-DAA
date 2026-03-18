@@ -17,6 +17,35 @@ import java.util.*;
 
 public class GestorIO {
 
+    public void planificaConFicheros(String nombreFicheroEntrada, String nombreFicheroSalida) throws IOException, FileNotFoundException{ 
+        File archivo2 = new File(nombreFicheroSalida);
+        if (archivo2.exists()) {
+            System.out.println("Archivo de salida existente, se procede a imprimir por pantalla");
+            List<Actividad> actividades = leerDesdeFichero(nombreFicheroEntrada);
+            SelectorActividades selector = new SelectorActividades();
+            List<Actividad> seleccionadas = selector.seleccionar(actividades);
+            escribirEnPantalla(seleccionadas);
+        }
+        
+        List<Actividad> actividades = leerDesdeFichero(nombreFicheroEntrada);
+        SelectorActividades selector = new SelectorActividades();
+        List<Actividad> seleccionadas = selector.seleccionar(actividades);
+        escribirEnFichero(nombreFicheroSalida, seleccionadas);   
+    }
+    public void planificaCon1Fichero(String nombreFicheroEntrada) throws FileNotFoundException{
+            List<Actividad> actividades = leerDesdeFichero(nombreFicheroEntrada);
+            SelectorActividades selector = new SelectorActividades();
+            List<Actividad> seleccionadas = selector.seleccionar(actividades);
+            escribirEnPantalla(seleccionadas);
+    }
+    
+    public void planificaConConsola(){
+        List<Actividad> actividades = leerDesdeTeclado();
+        SelectorActividades selector = new SelectorActividades();
+        List<Actividad> seleccionadas = selector.seleccionar(actividades);
+        escribirEnPantalla(seleccionadas);    
+    }
+    
     public List<Actividad> leerDesdeFichero(String nombreFichero) throws FileNotFoundException {
         File archivo = new File(nombreFichero);
         if (!archivo.exists()) {
